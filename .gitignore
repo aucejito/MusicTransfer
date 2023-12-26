@@ -1,32 +1,30 @@
-# Config and cache files
-config.yml
-config.yaml
-.cache-*
-.session.yml
-
 # Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
+# Config and cache files
 # Distribution / packaging
-build/
-dist/
-eggs/
-.eggs/
-sdist/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
 # Environments
-.env
-.venv
-env/
-venv/
-
 # mypy
-.mypy_cache/
+*$py.class
+*.db
+*.egg
+*.egg-info/
+*.py[cod]
+.cache-*
 .dmypy.json
+.eggs/
+.env
+.installed.cfg
+.mypy_cache/
+.session.yml
+.venv
+.web
+__pycache__/
+build/
+config.yaml
+config.yml
+dist/
 dmypy.json
+eggs/
+env/
+sdist/
+venv/
+wheels/
