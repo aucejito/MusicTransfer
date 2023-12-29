@@ -29,7 +29,7 @@ def open_spotify_session(config):
 
 def open_tidal_session(config=None):
     try:
-        with open('.session.yml', 'r') as session_file:
+        with open(".session.yml", "r") as session_file:
             previous_session = yaml.safe_load(session_file)
     except OSError:
         previous_session = None
@@ -47,16 +47,16 @@ def open_tidal_session(config=None):
             ):
                 return session
         except Exception as e:
-            print("Error loading previous Tidal Session: \n" + str(e) )
+            print("Error loading previous Tidal Session: \n" + str(e))
 
     login, future = session.login_oauth()
-    print('Login with the webbrowser: ' + login.verification_uri_complete)
+    print("Login with the webbrowser: " + login.verification_uri_complete)
     url = login.verification_uri_complete
-    if not url.startswith('https://'):
-        url = 'https://' + url
+    if not url.startswith("https://"):
+        url = "https://" + url
     webbrowser.open(url)
     future.result()
-    with open('.session.yml', 'w') as f:
+    with open(".session.yml", "w") as f:
         yaml.dump(
             {
                 "session_id": session.session_id,
