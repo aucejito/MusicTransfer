@@ -2,42 +2,49 @@
 import reflex as rx
 
 import auth
+from MusicTransfer import constants
+from MusicTransfer.base_state import BasePageState
 from rxconfig import config
 
 docs_url = "https://reflex.dev/docs/getting-started/introduction"
 filename = f"{config.app_name}/{config.app_name}.py"
 
 
-class State(rx.State):
-    """The app state."""
-
-    pass
-
-
-class TidalButtonState(rx.State):
-    is_logged = False
-    text_value = "Sign in with Tidal"
-
-    def login(self):
-        if self.is_logged:
-            return None
-        self.session = auth.open_tidal_session()
-        if self.session:
-            self.is_logged = True
-            print("Tidal Session opened successfully")
-
-        self.text_value = "Signed in with Tidal"
-        return None
-
-
 def index() -> rx.Component:
     return rx.flex(
         rx.button_group(
-            rx.button(
-                TidalButtonState.text_value,
-                color="white",
-                background_color="black",
-                on_click=TidalButtonState.login,
+            rx.cond(
+                BasePageState.tidal_is_app_authenticated,
+                rx.button(
+                    "Signed in with Tidal",
+                    color="black",
+                    background_color="white",
+                    style={"border": "0.15em solid black"},
+                ),
+                rx.button(
+                    "Sign in with Tidal",
+                    color="white",
+                    background_color="black",
+                    on_click=BasePageState.tidal_auth_url(),
+                ),
+            ),
+            rx.cond(
+                BasePageState.spotify_app_is_authenticated,
+                rx.button(
+                    "Signed in with Spotify",
+                    color="#1DB954",
+                    background_color="white",
+                    style={"border": "0.15em solid #1DB954"},
+                ),
+                rx.button(
+                    "Sign in with Spotify",
+                    color="white",
+                    background_color="#1DB954",
+                    on_click=rx.redirect(
+                        BasePageState.spotify_auth_url,
+                        external=False,
+                    ),
+                ),
             ),
             margin="0.5em",
             style={"position": "absolute", "right": "0"},
@@ -74,5 +81,5 @@ def index() -> rx.Component:
 
 # Add state and page to the app.
 app = rx.App()
-app.add_page(index)
+app.add_page(index, on_load=BasePageState.on_load)
 app.compile()

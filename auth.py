@@ -1,30 +1,12 @@
 #!/usr/bin/env python3
 
+import os
 import sys
 import webbrowser
 
 import spotipy
 import tidalapi
 import yaml
-
-
-def open_spotify_session(config):
-    credentials_manager = spotipy.SpotifyOAuth(
-        username=config["username"],
-        scope="playlist-read-private",
-        client_id=config["client_id"],
-        client_secret=config["client_secret"],
-        redirect_uri=config["redirect_uri"],
-    )
-    try:
-        credentials_manager.get_access_token(as_dict=False)
-    except spotipy.SpotifyOauthError:
-        sys.exit(
-            "Error opening Spotify sesion; could not get token for username:"
-            + config["username"]
-        )
-
-    return spotipy.Spotify(oauth_manager=credentials_manager)
 
 
 def open_tidal_session(config=None):
@@ -67,3 +49,8 @@ def open_tidal_session(config=None):
             f,
         )
     return session
+
+
+###########
+# Spotify #
+###########

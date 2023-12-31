@@ -19,10 +19,23 @@
             "name": "Debug - MacOS",
             "cwd": "${workspaceFolder}",
             "type": "python",
+            "autoReload": {
+                "enable": true,
+                "pattern": [
+                    "**/*.py"
+                ]
+            },
             "request": "launch",
-            "program": "${workspaceFolder}/sync.py",
-            "console": "integratedTerminal",
-            "args": [],
+            "module": "reflex",
+            "args": [
+                "run"
+            ],
+            "env": {
+                "SPOTIFY_CLIENT_ID" : "b9a380ccc7ea40698198008e22cc99da",
+                "SPOTIFY_CLIENT_SECRET" : "98a4f5afcc3241eb9f8e978ae3ff7ae9",
+                "SPOTIFY_REDIRECT_URI" : "http://localhost:3000/",
+                "SPOTIFY_API_SCOPES": "user-read-private",
+            }
         }
     ]
 }
